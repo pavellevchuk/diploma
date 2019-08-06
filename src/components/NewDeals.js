@@ -131,7 +131,7 @@ class Slider extends React.Component{
 
   render(){
     if(!this.visibleProducts.length) return null;
-    let favourites = JSON.parse(localStorage.getItem('favourites'));
+    let favourites = JSON.parse(localStorage.getItem('favourites')) ? JSON.parse(localStorage.getItem('favourites')): [];
     return(
     <div>      
       <div className="new-deals__slider">
