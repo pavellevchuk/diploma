@@ -2,7 +2,7 @@
   "name": "ra-bosa-noga",
   "version": "0.1.0",
   "private": true,
-  "homepage": " https://netology-code.github.io/ra-18-pavellevchuk/",
+  "homepage": " https://pavellevchuk.github.io/diploma/",
   "dependencies": {
     "gh-pages": "^2.0.1",
     "jquery": "^3.4.1",
