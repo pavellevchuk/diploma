@@ -20,7 +20,8 @@ class Pagination extends React.Component{
   }
 
   componentWillReceiveProps(props){
-    this.paginationList.children[props.page - 1].classList.add('active');
+    if(props.page)this.paginationList.children[props.page - 1].classList.add('active');
+    if(props.page == 1) this.angleBack.classList.add('hidden');
     this.setState({pages:props.pages,page:props.page});
   }
 

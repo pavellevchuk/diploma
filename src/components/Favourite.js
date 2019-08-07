@@ -47,7 +47,7 @@ class Favourite extends React.Component{
       from = to - 12;
       this.arr = forLength.filter((item,index) => index >= from && index < to);
       this.setState({favouritesArr: this.arr,page: page,count: forLength.length,pages : Math.ceil(forLength.length / 12) ? Math.ceil(forLength.length / 12) : 1 });
-      if(!this.arr.length) this.getData(page - 1);
+      if(!this.arr.length && page) this.getData(page - 1);
     }
 
     render(){

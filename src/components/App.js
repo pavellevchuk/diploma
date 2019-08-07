@@ -71,9 +71,9 @@ export class App extends Component {
                     <Nav cart ={this.state.productsInCart} deleteItem={this.deleteItem} cartId={this.state.cartId}/>
                     <Switch>
                         <Route path ='/' component={Home} exact/> 
-                        <Route path ='/catalogue' render = {() => <CatalogueWithFetcher visitedProducts={this.state.visitedProducts}/>} exact/>
-                        <Route path ='/product-card-desktop' render ={() => <ProductCart addToCart = {this.addToCart} addToVisited = {this.addToVisited} visitedProducts={this.state.visitedProducts} cartId={this.state.cartId}/> } exact/>
-                        <Route path ='/order' render = {() => <Order cartId ={this.state.cartId} productsInCart={this.state.productsInCart}/>} exact/>
+                        <Route path ='/catalogue' render = {() => <CatalogueWithFetcher visitedProducts={this.state.visitedProducts}/>}/>
+                        <Route path ='/product-card-desktop' render ={() => <ProductCart addToCart = {this.addToCart} addToVisited = {this.addToVisited} visitedProducts={this.state.visitedProducts} cartId={this.state.cartId}/> }/>
+                        <Route path ='/order' render = {() => <Order cartId ={this.state.cartId} productsInCart={this.state.productsInCart}/>}/>
                         <Route path ='/favourite' component={Favourite}/>
                     </Switch>
                     <Footer/>
