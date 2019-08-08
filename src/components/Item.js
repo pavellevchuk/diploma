@@ -21,7 +21,7 @@ class Item extends React.Component{
       }
     });
     this.data.images.length > 1 ? this.leftArrow.onclick = this.rightArrow.onclick = this.changeImage : this.leftArrow.style.display = this.rightArrow.style.display = 'none';
-    this.inFav = JSON.parse(localStorage.getItem('favourites')).find(item => this.data.id === item.id);
+    this.inFav = JSON.parse(localStorage.getItem('favourites')) ? JSON.parse(localStorage.getItem('favourites')).find(item => this.data.id === item.id) : null;
   }
 
   manageToFavourites = e => {
