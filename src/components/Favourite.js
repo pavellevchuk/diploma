@@ -42,7 +42,7 @@ class Favourite extends React.Component{
     }
 
     getData = (page) => {
-      let forLength = JSON.parse(localStorage.getItem('favourites'));
+      let forLength = JSON.parse(localStorage.getItem('favourites')) ? JSON.parse(localStorage.getItem('favourites')) : [];
       let to = page * 12,
       from = to - 12;
       this.arr = forLength.filter((item,index) => index >= from && index < to);
