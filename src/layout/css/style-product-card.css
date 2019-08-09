@@ -48,12 +48,12 @@ a:hover {
 
 /*Карточка товара*/
 .product-card {
-  width: 1440px;
+  width: 93%;
   margin: 0 auto;
 }
 
 .product-card-content {
-  width: 1120px;
+  width: 77%;
   margin: 0 auto;
 }
 
