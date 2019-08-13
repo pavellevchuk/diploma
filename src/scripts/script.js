@@ -28,9 +28,10 @@ function headerHiddenPanelBasketVisibility() {
 
 //Функция видимости меню поиска в шапке
 function headerMainSearchVisibility() {
+    let pic = document.querySelector('.header-main__pic_search');
     document.querySelector('.header-main__search').classList.toggle('header-main__search_active');
-    document.querySelector('.header-main__pic_search').classList.toggle('header-main__pic_search_is-hidden');
-
+    pic.classList.toggle('header-main__pic_search_is-hidden');
+    pic.style.zIndex = pic.classList.contains('header-main__pic_search_is-hidden') ? '0' : '1';
 }
 
 

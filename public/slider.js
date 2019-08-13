@@ -22,24 +22,24 @@ function slider(f, img, button, V, Vo, arrows) {
                 button[i].style.opacity = "0.5";
             }
             img[iii].style.zIndex = "1";
-            iii = ((iii != (img.length - 1)) ? (iii + 1) : 0);
+            iii = ((iii !== (img.length - 1)) ? (iii + 1) : 0);
             img[iii].style.zIndex = "2";
             img[iii].style.opacity = "0";
             button[iii].style.opacity = "1";
-        } else if (img[iii].style.opacity != "") {
+        } else if (img[iii].style.opacity !== "") {
             img[iii].style.opacity = ((progress / Vo < 1) ? (progress / Vo) : 1);
         }
-        if (clear != "0" && progress > Vo) {} else {
+        if (clear !== 0 && progress > Vo) {} else {
             requestAnimationFrame(step);
         }
     }
     requestAnimationFrame(step);
     f.onmouseenter = function () {
-        if (clear == "0") clear = "1";
+        if (clear === 0) clear = 1;
     } // при наведении на слайдер
     f.onmouseleave = function () {
-        if (clear == "1") {
-            clear = "0";
+        if (clear === 1) {
+            clear = 0;
             requestAnimationFrame(step);
         }
     } // курсор убран со слайдера
@@ -72,8 +72,13 @@ function slider(f, img, button, V, Vo, arrows) {
     }
 }
 
-var f = document.querySelector('.slider__pictures'),
+
+let startSlider = event => {
+    var f = document.querySelector('.slider__pictures'),
     a = f.getElementsByClassName('slider__image'),
     button = f.getElementsByClassName('slider__circles')[0].getElementsByClassName('slider__circle'),
     arrows = f.getElementsByClassName('slider__arrow');
-slider(f, a, button, '4000', '1000', arrows);
+    slider(f, a, button, '4000', '1000', arrows);
+}
+
+window.addEventListener('load',startSlider);

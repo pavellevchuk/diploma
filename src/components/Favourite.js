@@ -14,10 +14,6 @@ class Favourite extends React.Component{
         }
     }
 
-    componentDidUpdate(){
-        console.log('lol')
-    }
-
     componentDidMount(){
       this.getData(1);
     }

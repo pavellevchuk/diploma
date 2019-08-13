@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {BrowserRouter, Switch , Route, withRouter} from 'react-router-dom'
+import {BrowserRouter, Switch , Route} from 'react-router-dom'
 import Nav from './Nav.js'
 import Home from './Home.js'
 import Footer from './Footer.js';
@@ -15,7 +15,6 @@ import '../layout/css/style-favorite.css'
 import '../layout/css/style-order.css'
 import '../layout/css/style-product-card.css'
 
-const NavWithRouter = withRouter(Nav);
 
 
 export class App extends Component {
@@ -35,7 +34,7 @@ export class App extends Component {
     addToCart = (id,size,data) => {
         let arr = [...this.state.productsInCart],
         newData = {...data};
-        newData.size = parseInt(size);
+        newData.size = parseInt(size,10);
         arr.push(newData);
         this.setState({cartId: id,productsInCart:arr});
     }
@@ -60,7 +59,6 @@ export class App extends Component {
             temp.push(newData);
         }
         if(temp.length > 10) temp.splice(0,1);
-        console.log(temp);
         this.setState({visitedProducts:temp});
     }
 

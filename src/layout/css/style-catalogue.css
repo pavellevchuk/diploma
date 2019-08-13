@@ -26,7 +26,7 @@ a:hover {
 /*Общее*/
 
 .product-catalogue {
-  width: 1440px;
+  width: 75%;
   margin: 0 auto;
 }
 
@@ -38,13 +38,13 @@ a:hover {
 
 .product-catalogue-content {
   display: inline-block;
-  width: 915px;
+  width: 64%;
   margin-right: 120px;
 }
 
 /*Breadcrumbs*/
 .site-path {
-  width: 1120px;
+  width: 70%;
   margin: 0 auto;
   padding-bottom: 18px;
 }
@@ -70,7 +70,7 @@ a:hover {
 .product-catalogue__head {
   display: flex;
   justify-content: space-between;
-  width: 892px;
+  width: 95%;
   height: 28px;
   margin-top: -2px;
   margin-left: 24px;
@@ -610,7 +610,7 @@ li.active {
 }
 
 .sidebar {
-  width: 285px;
+  width: 19%;
   height: auto;
   margin-left: 120px;
   vertical-align: top;

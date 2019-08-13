@@ -108,7 +108,7 @@ class Order extends React.Component{
 
     changePrice = () => {
       let sum = 0;
-      document.querySelectorAll('.basket-item__price').forEach(item => sum += parseInt(item.innerText));
+      document.querySelectorAll('.basket-item__price').forEach(item => sum += parseInt(item.innerText,10));
       this.setState({price: sum});
     }
 
@@ -210,9 +210,9 @@ class CartItem extends React.Component{
     const index = this.props.index, item = this.props.item;
     return(
               <div className="basket-item" key={index}>
-                <div className="basket-item__pic" style={{background:`url(${item.images[0]}) center center /contain no-repeat`}}></div>
+                <Link to={`/product-card-desktop?id=${item.id}`} className="basket-item__pic" style={{background:`url(${item.images[0]}) center center /contain no-repeat`}}></Link>
                 <div className="basket-item__product">
-                  <div className="basket-item__product-name"><Link to={`/product-card-desktop?${item.id}`}>{item.title}</Link></div>
+                  <div className="basket-item__product-name"><Link to={`/product-card-desktop?id=${item.id}`}>{item.title}</Link></div>
                   <div className="basket-item__product-features">
                     <div className="basket-item__size">Размер: <span>{item.size}</span></div>
                     <div className="basket-item__producer">Производитель: <span>{item.brand}</span></div>
@@ -275,7 +275,7 @@ class OrderDone extends React.Component{
             </div>
           </div>
           <p className={`order-done__notice ${this.email ? '' : 'hidden'}`}>Данные о заказе отправлены на адрес <span>{this.email}</span></p>
-          <a href='/catalogue' className="order-done__continue" >продолжить покупки</a>
+          <Link to='/catalogue' className="order-done__continue" >продолжить покупки</Link>
         </section>
       </div>);
   }

@@ -49,7 +49,7 @@ class Sidebar extends React.Component{
   }
 
   createMultipleURL = (name,filter) => {
-    let searchParams = new URLSearchParams(window.location.search),isPresent = false,paramsCopy;
+    let searchParams = new URLSearchParams(window.location.search);
     searchParams.has(name) ? searchParams.get(name) === filter ? searchParams.delete(name) : searchParams.set(name,filter) : searchParams.append(name, filter);
     return '?' + searchParams.toString(); 
   }

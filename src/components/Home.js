@@ -3,28 +3,17 @@ import NewDeals from './NewDeals.js'
 import sliderPic from '../layout/img/slider.jpg'
 import sliderPic180 from '../layout/img/slider180deg.jpeg'
 import {Link} from 'react-router-dom'
-//import {slider} from '../scripts/slider.js'
-
+import {slider} from '../scripts/slider.js'
 
 
 class Home extends React.Component{
     constructor(props){
         super(props);
-        this.a = [];
-        this.button = [];
-        this.arrows = [];
         this.state = {
             data: null
         };
     }
     componentDidMount(){
-        window.requestAnimationFrame = (function () { 
-            return window.requestAnimationFrame ||
-                function (callback) {
-                    return window.setTimeout(callback, 1000 / 60);
-                };
-        })();
-        //slider(this.f, this.a, this.button, '4000', '1000', this.arrows);
         fetch('https://api-neto.herokuapp.com/bosa-noga/featured')
         .then(res => res.json())
         .then(data => this.setState({data:data}));
@@ -35,25 +24,25 @@ class Home extends React.Component{
     <section className="slider">
       <div className="wrapper">
         <div className="slider__pictures" ref={element => this.f = element}>
-          <Link className="slider__image" to="/" ref={element => this.a.push(element)}>
+          <Link className="slider__image" to="/" style={{zIndex:'2',opacity:'1'}}>
             <img src={sliderPic} alt="slide pic"/>
           </Link>
-          <Link className="slider__image" to="/" ref={element => this.a.push(element)}>
+          <Link className="slider__image" to="/" style={{zIndex:'0',opacity:'1'}}>
             <img src={sliderPic180} alt="slide pic"/>
           </Link>
-          <Link className="slider__image" to="/" ref={element => this.a.push(element)}>
+          <Link className="slider__image" to="/" style={{zIndex:'0',opacity:'1'}}>
             <img src={sliderPic} alt="slide pic"/>
           </Link>
-          <Link className="slider__image" to="/" ref={element => this.a.push(element)}>
+          <Link className="slider__image" to="/" style={{zIndex:'1',opacity:'1'}}>
             <img src={sliderPic180} alt="slide pic"/>
           </Link>
-          <div className="arrow slider__arrow slider__arrow_left" ref={element => this.arrows.push(element)}></div>
-          <div className="arrow slider__arrow slider__arrow_right" ref ={element => this.arrows.push(element)}></div>
+          <div className="arrow slider__arrow slider__arrow_left"></div>
+          <div className="arrow slider__arrow slider__arrow_right" ></div>
           <div className="slider__circles">
-            <button className="slider__circle" value="0" ref={element => this.button.push(element)}></button>
-            <button className="slider__circle" value="1" ref={element => this.button.push(element)}></button>
-            <button className="slider__circle" value="2" ref={element => this.button.push(element)}></button>
-            <button className="slider__circle" value="3" ref={element => this.button.push(element)}></button>
+            <button className="slider__circle" value="0"></button>
+            <button className="slider__circle" value="1"></button>
+            <button className="slider__circle" value="2"></button>
+            <button className="slider__circle" value="3"></button>
           </div>
           <h2 className="h2">К весне готовы!</h2>
         </div>

@@ -11,7 +11,8 @@ class Nav extends React.Component{
       categoryId: '',
       data: [],
       cartCount : 0,
-      products : null
+      products : null,
+      searchVal:''
     }
   }
   componentDidMount(){
@@ -141,8 +142,8 @@ class Nav extends React.Component{
                   <div className="header-main__pic_basket_menu"></div>
                 </div>
               </div>
-              <form className="header-main__search" action="#">
-                <input placeholder="Поиск"/><i className="fa fa-search" aria-hidden="true"></i>
+              <form className="header-main__search" action="#" >
+                <input placeholder="Поиск" onChange={event => this.setState({searchVal:event.currentTarget.value})}/><Link to={this.state.searchVal.length ? '/catalogue?search=' + this.state.searchVal : '/catalogue'}><i className="fa fa-search" aria-hidden="true" onClick={e => this.searchPic.click()}></i></Link>
               </form>
             </div>
           </div>
