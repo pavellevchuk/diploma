@@ -72,13 +72,9 @@ function slider(f, img, button, V, Vo, arrows) {
     }
 }
 
+var f = document.querySelector('.slider__pictures'),
+a = f.getElementsByClassName('slider__image'),
+button = f.getElementsByClassName('slider__circles')[0].getElementsByClassName('slider__circle'),
+arrows = f.getElementsByClassName('slider__arrow');
+slider(f, a, button, '4000', '1000', arrows);
 
-let startSlider = event => {
-    var f = document.querySelector('.slider__pictures'),
-    a = f.getElementsByClassName('slider__image'),
-    button = f.getElementsByClassName('slider__circles')[0].getElementsByClassName('slider__circle'),
-    arrows = f.getElementsByClassName('slider__arrow');
-    slider(f, a, button, '4000', '1000', arrows);
-}
-
-window.addEventListener('load',startSlider);

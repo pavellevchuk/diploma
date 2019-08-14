@@ -1,11 +1,11 @@
 import React from 'react'
-import SitePath from './SitePath.js'
 import Sidebar from './Sidebar.js'
 import Item from './Item.js'
 import Pagination from './Pagination.js'
 import{createURL} from '../scripts/script.js'
 import VisitedProducts from './VisitedProducts.js';
 import Preloader from './Preloader.js'
+import Breadcrumps from './Breadcrumps.js';
 
 class CatalogueWithFetcher extends React.Component{
   constructor(props){
@@ -14,14 +14,14 @@ class CatalogueWithFetcher extends React.Component{
     this.state = {
       products: null,
       page : 1,
-      isLoading: true
+      isLoading: true,
+      paths:[{path:'/',name:'Главная'}]
     }
   }
 
   componentDidMount(){
     this.fetchData(this.state.page);
   }
-
 
   fetchData = page => {
     this.setState({isLoading:true});
@@ -34,21 +34,11 @@ class CatalogueWithFetcher extends React.Component{
     });
   }
 
-
-  headerTitle = () => {
-    let searchParams = new URLSearchParams(window.location.search);
-    switch (searchParams.get('categoryId')){
-      case('12'):
-        return 'Мужская обувь';
-      case('13'):
-        return 'Женская обувь';
-      case('15'):
-        return 'Детская обувь';
-      default:
-        return 'Все товары';
-    }
+  changeCrump = (name,id) => {
+    let paths = [...this.state.paths];
+    paths.push({name:name,path:`/catalogue?categoryId=${id}`});
+    this.setState({paths:paths});
   }
-
 
 
   render(){
@@ -60,11 +50,11 @@ class CatalogueWithFetcher extends React.Component{
     return(
   <div>
     <Preloader/>  
-    <SitePath/>
+    <Breadcrumps paths={this.state.paths}/>
     <main className="product-catalogue"> {/* added clearfix in style-catalogue.css */}
     <Sidebar/>
       <section className="product-catalogue-content">
-        <Catalogue page={this.state.page}/>
+        <Catalogue page={this.state.page} changeCrump = {this.changeCrump}/>
       </section>
     </main>
     <section className="product-catalogue__overlooked-slider">
@@ -83,7 +73,8 @@ class Catalogue extends React.Component{
       products: null,
       isLoading : true,
       page:this.props.page,
-      sortValue : ''
+      sortValue : '',
+      headerTitle:''
     }
   }
 
@@ -91,8 +82,8 @@ class Catalogue extends React.Component{
     this.fetchData(this.props.page);
   }
 
-  componentWillReceiveProps({page}){
-    this.fetchData(page);
+  componentWillReceiveProps(props){
+    this.fetchData(props.page);
   }
 
   fetchData = (page,withSort) => {
@@ -102,23 +93,30 @@ class Catalogue extends React.Component{
     .then(res => res.json())
     .then(data => {
       if(data.status === 'ok'){
-        this.setState({products:data,isLoading:false});
+        let name = this.headerTitle();
+        this.setState({products:data,isLoading:false,headerTitle:name});
+        //this.props.changeCrump(name,data.data.categoryId)
       }else throw new Error(data.message);
     });
   }
 
   headerTitle = () => {
-    let searchParams = new URLSearchParams(window.location.search);
+    let searchParams = new URLSearchParams(window.location.search),
+    title;
     switch (searchParams.get('categoryId')){
       case('12'):
-        return 'Мужская обувь';
+        title =  'Мужская обувь';
+        break;
       case('13'):
-        return 'Женская обувь';
+        title =  'Женская обувь';
+        break;
       case('15'):
-        return 'Детская обувь';
+        title =  'Детская обувь';
+        break;
       default:
-        return 'Все товары';
+        title =  'Все товары';
     }
+    return title;
   }
 
   sortBy = event => {
@@ -136,7 +134,7 @@ class Catalogue extends React.Component{
       <div>
         <section className="product-catalogue__head">
           <div className="product-catalogue__section-title">
-            <h2 className="section-name">{this.headerTitle()}</h2><span className="amount">{products.goods} товаров</span>
+            <h2 className="section-name">{this.state.headerTitle}</h2><span className="amount">{products.goods} товаров</span>
           </div>
           <div className="product-catalogue__sort-by">
             <p className="sort-by">Сортировать</p>

@@ -3,7 +3,6 @@ import NewDeals from './NewDeals.js'
 import sliderPic from '../layout/img/slider.jpg'
 import sliderPic180 from '../layout/img/slider180deg.jpeg'
 import {Link} from 'react-router-dom'
-import {slider} from '../scripts/slider.js'
 
 
 class Home extends React.Component{
@@ -17,7 +16,15 @@ class Home extends React.Component{
         fetch('https://api-neto.herokuapp.com/bosa-noga/featured')
         .then(res => res.json())
         .then(data => this.setState({data:data}));
+        let sliderScript = document.querySelector('.sliderScript');
+        if(sliderScript) document.body.removeChild(sliderScript); 
+
+        let script = document.createElement('script');
+        script.src = './slider.js';
+        script.classList.add('sliderScript');
+        document.body.appendChild(script);
     }
+
     render(){
         return(
    <div>

@@ -20,6 +20,7 @@ import '../layout/css/style-product-card.css'
 export class App extends Component {
     constructor(props){
         super(props);
+        this.i = 0;
         this.state ={
             productsInCart: [],
             visitedProducts : [],
@@ -28,14 +29,15 @@ export class App extends Component {
     }
 
     componentDidUpdate(){
-        console.log('App updated');
+        console.log(this.state);
     }
 
     addToCart = (id,size,data) => {
-        let arr = [...this.state.productsInCart],
+        let arr = [...this.state.productsInCart],newArr = [],
         newData = {...data};
         newData.size = parseInt(size,10);
-        arr.push(newData);
+        let sameIndex = arr.findIndex(item => item.id === newData.id && item.size === newData.size);
+        if(sameIndex !== -1){}else arr.push(newData);
         this.setState({cartId: id,productsInCart:arr});
     }
 
@@ -70,7 +72,7 @@ export class App extends Component {
                     <Switch>
                         <Route path ='/' component={Home} exact/> 
                         <Route path ='/catalogue' render = {() => <CatalogueWithFetcher visitedProducts={this.state.visitedProducts}/>}/>
-                        <Route path ='/product-card-desktop' render ={() => <ProductCart addToCart = {this.addToCart} addToVisited = {this.addToVisited} visitedProducts={this.state.visitedProducts} cartId={this.state.cartId}/> }/>
+                        <Route path ='/product-card-desktop' render ={() => <ProductCart addToCart = {this.addToCart} addToVisited = {this.addToVisited} visitedProducts={this.state.visitedProducts} cartId={this.state.cartId} productsInCart={this.state.productsInCart}/> }/>
                         <Route path ='/order' render = {() => <Order cartId ={this.state.cartId} productsInCart={this.state.productsInCart}/>}/>
                         <Route path ='/favourite' component={Favourite}/>
                     </Switch>

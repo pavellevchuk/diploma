@@ -14,7 +14,8 @@ class ProductCard extends React.Component{
             price : null,
             quantity: 1,
             inFavourites:false,
-            size: null
+            size: null,
+            paths:[]
         }
     }
     componentDidMount(){
@@ -83,10 +84,17 @@ class ProductCard extends React.Component{
     }
 
     fetchForCart = () => {
+      let sameIndex = this.props.productsInCart.findIndex(item => item.id === this.state.data.id && item.size == this.state.size),
+          quantity;
+      if(sameIndex !== -1){
+        quantity = this.props.productsInCart[sameIndex].amount;
+        quantity += this.state.quantity;
+      } 
+
       let opts = {
         method:'POST',
         headers:{'Content-Type' : 'application/json'},
-        body: JSON.stringify({id:this.state.data.id,size:parseInt(this.state.size),amount:this.state.quantity})
+        body: JSON.stringify({id:this.state.data.id,size:parseInt(this.state.size),amount:sameIndex !== -1 ? quantity :this.state.quantity })
       }
       
       fetch(`https://api-neto.herokuapp.com/bosa-noga/cart/${this.props.cartId ? this.props.cartId : ''}`,opts)

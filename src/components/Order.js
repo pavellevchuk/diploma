@@ -1,6 +1,7 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
 import Preloader from './Preloader.js'
+import Breadcrumps from './Breadcrumps.js';
 
 class OrderPage extends React.Component{
   constructor(props){
@@ -58,7 +59,8 @@ class Order extends React.Component{
           quantity : 1,
           price : null,
           data:null,
-          isLodaing: true
+          isLodaing: true,
+          paths:[{path:'/',name:'Главная'},{path:'/order',name:'Корзина'},{path:'/order',name:'Оформление заказа'}]
         }
     }
 
@@ -128,6 +130,7 @@ class Order extends React.Component{
     
         return(      
         <div className="wrapper order-wrapper">
+        <Breadcrumps paths={this.state.paths}/>
         <section className="order-process">
           <h2 className="order-process__title">Оформление заказа</h2>
           <div className="order-process__basket order-basket">
@@ -189,6 +192,7 @@ class CartItem extends React.Component{
     this.email = JSON.parse(localStorage.getItem('email'));
     this.state = {
       quantity : props.item.amount
+      
     }
   }
 
@@ -244,12 +248,16 @@ class OrderDone extends React.Component{
       default:
         this.paymentType = 'Не извесно'
     }
+    this.state = {
+      paths:[{path:'/',name:'Главная'},{path:'/order',name:'Корзина'},{path:'/order',name:'Оформление заказа'},{path:'/order',name:'Заказ принят'}]
+    }
   }
 
   render(){
     const data = this.props.data;
     return(      
-    <div className="wrapper order-wrapper">                  
+    <div className="wrapper order-wrapper">
+      <Breadcrumps paths={this.state.paths}/>                  
         <section className="order-done">
           <h2 className="order-done__title order-process__title">Заказ принят, спасибо!</h2>
           <div className="order-done__information order-info">

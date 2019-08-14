@@ -1,6 +1,7 @@
 import React from 'react'
 import Item from './Item.js'
 import Pagination from './Pagination.js'
+import Breadcrumps from './Breadcrumps.js';
 
 class Favourite extends React.Component{
     constructor(props){
@@ -10,7 +11,8 @@ class Favourite extends React.Component{
             favouritesArr : this.arr,
             page : 1,
             count : this.arr.length,
-            pages: Math.ceil(this.arr.length / 12) ? Math.ceil(this.arr.length / 12) : 1 
+            pages: Math.ceil(this.arr.length / 12) ? Math.ceil(this.arr.length / 12) : 1,
+            paths:[{path:'/',name:'Главная'},{path:'/favourite',name:'Избранное'}]
         }
     }
 
@@ -49,6 +51,7 @@ class Favourite extends React.Component{
     render(){
         return (
         <div className="wrapper wrapper_favorite">
+        <Breadcrumps paths={this.state.paths}/>
         <main className="product-catalogue product-catalogue_favorite">
           <section className="product-catalogue__head product-catalogue__head_favorite">
             <div className="product-catalogue__section-title">

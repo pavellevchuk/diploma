@@ -986,7 +986,6 @@ span.color-name {
   flex-direction: column;
   flex-wrap: nowrap;
   overflow: auto;
-
 }
 
 .sidebar__occasion ul li {
@@ -1004,6 +1003,18 @@ span.color-name {
   padding-top: 24px;
   padding-left: 22px;
   padding-bottom: 10px;
+}
+
+.sidebar__season ul {
+  width: 240px;
+  height: 70px;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  overflow: auto;
+}
+
+.sidebar__season ul li {
+  padding-top: 12px;
 }
 
 .sidebar__season .opener-up {
