@@ -88,7 +88,7 @@ class Catalogue extends React.Component{
 
   fetchData = (page,withSort) => {
     this.setState({isLoading:true,page:page});
-    let search = `?page=${page}&${window.location.search.replace('?','&')}`;
+    let search = `?page=${page}&${window.location.search.replace('?','&')}${withSort?'&sortBy='+withSort:''}`;
     fetch(`${this.url}${search}`)
     .then(res => res.json())
     .then(data => {
@@ -120,7 +120,7 @@ class Catalogue extends React.Component{
   }
 
   sortBy = event => {
-    window.location.search = createURL('sortBy', event.currentTarget.value);
+    this.fetchData(this.state.page,event.currentTarget.value);
   }
 
     render(){
