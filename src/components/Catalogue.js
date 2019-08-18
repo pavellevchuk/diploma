@@ -2,7 +2,7 @@ import React from 'react'
 import Sidebar from './Sidebar.js'
 import Item from './Item.js'
 import Pagination from './Pagination.js'
-import{createURL} from '../scripts/script.js'
+import{headerTitle} from '../scripts/script.js'
 import VisitedProducts from './VisitedProducts.js';
 import Preloader from './Preloader.js'
 import Breadcrumps from './Breadcrumps.js';
@@ -14,8 +14,7 @@ class CatalogueWithFetcher extends React.Component{
     this.state = {
       products: null,
       page : 1,
-      isLoading: true,
-      paths:[{path:'/',name:'Главная'}]
+      isLoading: true
     }
   }
 
@@ -34,12 +33,6 @@ class CatalogueWithFetcher extends React.Component{
     });
   }
 
-  changeCrump = (name,id) => {
-    let paths = [...this.state.paths];
-    paths.push({name:name,path:`/catalogue?categoryId=${id}`});
-    this.setState({paths:paths});
-  }
-
 
   render(){
     const {isLoading} = this.state;
@@ -47,10 +40,12 @@ class CatalogueWithFetcher extends React.Component{
       return null;
     }
 
+    let id = new URLSearchParams(window.location.search).get('categoryId');
+
     return(
   <div>
     <Preloader/>  
-    <Breadcrumps paths={this.state.paths}/>
+    <Breadcrumps paths={[{path:'/',name:'Главная'},{path:`/catalogue?categoryId=${id}`,name:headerTitle()}]}/>
     <main className="product-catalogue"> {/* added clearfix in style-catalogue.css */}
     <Sidebar/>
       <section className="product-catalogue-content">
@@ -93,30 +88,10 @@ class Catalogue extends React.Component{
     .then(res => res.json())
     .then(data => {
       if(data.status === 'ok'){
-        let name = this.headerTitle();
+        let name = headerTitle();
         this.setState({products:data,isLoading:false,headerTitle:name});
-        //this.props.changeCrump(name,data.data.categoryId)
       }else throw new Error(data.message);
     });
-  }
-
-  headerTitle = () => {
-    let searchParams = new URLSearchParams(window.location.search),
-    title;
-    switch (searchParams.get('categoryId')){
-      case('12'):
-        title =  'Мужская обувь';
-        break;
-      case('13'):
-        title =  'Женская обувь';
-        break;
-      case('15'):
-        title =  'Детская обувь';
-        break;
-      default:
-        title =  'Все товары';
-    }
-    return title;
   }
 
   sortBy = event => {

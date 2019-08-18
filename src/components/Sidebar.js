@@ -1,6 +1,6 @@
 import React from 'react'
-import {Link} from 'react-router-dom'
-import{createURL,switchCaseColor} from '../scripts/script.js'
+import {Link,withRouter} from 'react-router-dom'
+import{createURL,switchCaseColor,getVals} from '../scripts/script.js'
 
 class Sidebar extends React.Component{
   constructor(props){
@@ -17,6 +17,18 @@ class Sidebar extends React.Component{
     .then(data => this.setState({
           filters: data.data
       }));
+        // Initialize Sliders
+        var sliderSections = document.getElementsByClassName("price-slider");
+            for( var x = 0; x < sliderSections.length; x++ ){
+              var sliders = sliderSections[x].getElementsByTagName("input");
+              for( var y = 0; y < sliders.length; y++ ){
+                if( sliders[y].type ==="range" ){
+                  sliders[y].oninput = getVals;
+                  // Manually trigger event first time to display values
+                  sliders[y].oninput();
+                }
+              }
+      }
   }
 
   //added styles for .chosen a in style-catalogue.css
@@ -98,19 +110,15 @@ class Sidebar extends React.Component{
               <div className="sidebar__division-title" ref={element => this.price = element} onClick={this.toggleView}>
                 <h3>Цена</h3><div className="opener-up"></div>
               </div>
-              <div className="price-slider">
-                <div className="circle-container">
-                  <div className="circle-1"></div>
-                  <div className="line-white"></div>
-                  <div className="line-colored"></div>
-                  <div className="circle-2"></div>
-                </div>
-                <div className="counter">
-                  <input type="text" className="input-1" defaultValue="1000"/>
+              <section className="price-slider" ref={element => this.priceSlider = element}>
+                <FirstThumb/>
+                <SecondThumb/>
+              </section>
+              <div className="counter">
+                  <FirstInput/>
                   <div className="input-separator"></div>
-                  <input type="text" className="input-2" defaultValue="30 000"/>
+                  <SecondInput/>
                 </div>
-              </div>
             </div>
         </section>
         <div className="separator-150 separator-150-2"></div>
@@ -190,4 +198,32 @@ class Sidebar extends React.Component{
   }
 }
 
+
+
+
+
+const FirstInput = withRouter(({history}) => <input type="number" className="input-1" onChange={event => changeSliderVal(event,history)} defaultValue="5000"/>)
+
+const SecondInput = withRouter(({history}) => <input type="number" className="input-2" onChange={event => changeSliderVal(event,history)} defaultValue="30000"/>)
+
+const FirstThumb = withRouter(({history}) => <input defaultValue="5000" min="500" max="50000" step="500" type="range" onChange = {e => getVals(e, history)}/>)
+const SecondThumb = withRouter(({history}) => <input defaultValue="30000" min="500" max="50000" step="500" type="range" onChange = {e => getVals(e, history)}/>)
+
+
+let changeSliderVal = (event,history) => {
+  let bigger = event.currentTarget.classList.contains('input-2');
+  let element = bigger ? document.querySelector('.price-slider').children[1] : document.querySelector('.price-slider').children[0];
+  element.value = event.currentTarget.value;
+  let searchParams = new URLSearchParams(window.location.search), url = window.location.pathname,index = 0;
+  let paramName = bigger ? 'maxPrice' : 'minPrice';
+  for(let pair of searchParams.entries()){
+    if(pair[0] !== paramName){
+      url += `${index ? `&${pair[0]}=${pair[1]}`: `?${pair[0]}=${pair[1]}`}`;
+      index++;
+    }
+  }
+  let str = index ? `&${paramName}=${event.currentTarget.value}` : `?${paramName}=${event.currentTarget.value}`;
+  history.push(url + str);
+}
+              
 export default Sidebar

@@ -26,7 +26,7 @@ a:hover {
 /*Общее*/
 
 .product-catalogue {
-  width: 75%;
+  width: 95%;
   margin: 0 auto;
 }
 
@@ -724,9 +724,10 @@ li.active {
 }
 
 .counter {
-  width: 100%;
+  width: 85%;
   display: flex;
   justify-content: space-between;
+  margin:0 auto;
 }
 
 .circle-container {
@@ -1169,4 +1170,88 @@ width: 7px;
 
 ::-webkit-scrollbar{
 width: 7px;
+}
+
+section.price-slider {
+  position: relative;
+  width:90% ;
+  height: 100px;
+  text-align: center;
+}
+section.price-slider input[type="range"] {
+  pointer-events: none;
+  position: absolute;
+  -webkit-appearance: none;
+  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+  border: none;
+  border-radius: 10px;
+  background: #F4F4F4;
+  left: 0;
+  top: 50px;
+  width: 100%;
+  outline: none;
+  height:7px;
+  margin: 0;
+  padding: 0;
+}
+section.price-slider input[type="range"]::-webkit-slider-thumb {
+  pointer-events: all;
+  position: relative;
+  z-index: 1;
+  outline: 0;
+  -webkit-appearance: none;
+  width: 25px;
+  height: 25px;
+  border: none;
+  border-radius: 50%;
+  /* android <= 2.2 */
+  /* older mobile safari and android > 2.2 */
+  /* W3C */
+background: white;
+  border: 0.5px solid rgba(0, 0, 0, 0.101987);
+    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.16), 0px 3px 8px rgba(0, 0, 0, 0.15), 0px 3px 3px rgba(0, 0, 0, 0.05);
+}
+section.price-slider input[type="range"]::-moz-range-thumb {
+  pointer-events: all;
+  position: relative;
+  z-index: 10;
+  -moz-appearance: none;
+  width: 25px;
+  height: 25px;
+  border: none;
+  border-radius: 50%;
+background: white;
+  border: 0.5px solid rgba(0, 0, 0, 0.101987);
+    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.16), 0px 3px 8px rgba(0, 0, 0, 0.15), 0px 3px 3px rgba(0, 0, 0, 0.05);
+  /* W3C */
+}
+
+
+section.price-slider input[type="range"]::-ms-thumb {
+  pointer-events: all;
+  position: relative;
+  z-index: 10;
+  -ms-appearance: none;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  border: 0;
+  border: 0.5px solid rgba(0, 0, 0, 0.101987);
+  background: white;
+    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.16), 0px 3px 8px rgba(0, 0, 0, 0.15), 0px 3px 3px rgba(0, 0, 0, 0.05);
+  /* W3C */
+}
+section.price-slider input[type=range]::-moz-range-track {
+  position: relative;
+  z-index: -1;
+  background-color: black;
+  border: 0;
+}
+section.price-slider input[type=range]:last-of-type::-moz-range-track {
+  -moz-appearance: none;
+  background: none transparent;
+  border: 0;
+}
+section.price-slider input[type=range]::-moz-focus-outer {
+  border: 0;
 }

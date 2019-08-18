@@ -141,6 +141,53 @@ let manageItemToLocalStorage = data => {
     console.log(JSON.parse(localStorage.getItem('favourites')));
 }
 
+let headerTitle = () => {
+  let searchParams = new URLSearchParams(window.location.search),
+  title;
+  switch (searchParams.get('categoryId')){
+    case('12'):
+      title =  'Мужская обувь';
+      break;
+    case('13'):
+      title =  'Женская обувь';
+      break;
+    case('15'):
+      title =  'Детская обувь';
+      break;
+    default:
+      title =  'Все товары';
+  }
+  return title;
+}
+
+
+function getVals(e,history){
+  // Get slider values
+  var parent = e.currentTarget.parentNode;
+  var slides = parent.getElementsByTagName("input");
+  var slide1 = parseFloat( slides[0].value );
+  var slide2 = parseFloat( slides[1].value );
+  // Neither slider will clip the other, so make sure we determine which is larger
+  if( slide1 > slide2 ){ var tmp = slide2; slide2 = slide1; slide1 = tmp; }
+  
+  var displayElement = parent.parentElement.getElementsByClassName("counter")[0];
+  displayElement.querySelector('.input-1').value = slide1;
+  displayElement.querySelector('.input-2').value = slide2;
+
+  goToNewURL(e,history,slide1,slide2);
+}
+
+function goToNewURL(event,history,slide1,slide2){
+  let searchParams = new URLSearchParams(window.location.search), url = window.location.pathname,index = 0,paramName,slider = document.querySelector('.price-slider');
+  for(let pair of searchParams.entries()){
+    if(pair[0] !== 'minPrice' && pair[0] !== 'maxPrice'){
+      url += `${index ? `&${pair[0]}=${pair[1]}`: `?${pair[0]}=${pair[1]}`}`;
+      index++;
+    }
+  }
+  let str = index ? `&minPrice=${slide1}&maxPrice=${slide2}` : `?minPrice=${slide1}&maxPrice=${slide2}`;
+  history.push(url + str);
+}
 
 export {headerHiddenPanelProfileVisibility}
 export {headerHiddenPanelBasketVisibility}
@@ -149,3 +196,5 @@ export {mainSubmenuVisibility}
 export {createURL}
 export{switchCaseColor}
 export {manageItemToLocalStorage}
+export {headerTitle}
+export {getVals}

@@ -2,6 +2,7 @@ import React from 'react'
 import {Link} from 'react-router-dom'
 import {manageItemToLocalStorage} from '../scripts/script.js'
 import VisitedProducts from './VisitedProducts.js'
+import Breadcrumps from './Breadcrumps.js'
 
 
 class ProductCard extends React.Component{
@@ -108,6 +109,19 @@ class ProductCard extends React.Component{
       })
     }
 
+    getCategoryName = () => {
+      switch (this.state.data.categoryId){
+        case(12):
+          return 'Мужская обувь';
+        case(13):
+          return 'Женская обувь';
+        case(15):
+          return 'Детская обувь';
+        default:
+          return 'Все товары';
+      }
+    }
+
 
     render(){
         const {data,isLoading,mainPhoto,price,quantity} = this.state;
@@ -124,6 +138,7 @@ class ProductCard extends React.Component{
 
         return(
         <div>
+        <Breadcrumps paths={[{path:'/',name:'Главная'},{path:`/catalogue?categoryId=${this.state.data.categoryId}`,name:this.getCategoryName()},{path:`/product-card-desktop?id=${this.state.data.id}`,name:this.state.data.title}]}/>
         <main className="product-card">
 			<section className="product-card-content">
 				<h2 className="section-name">{data.title}</h2>
