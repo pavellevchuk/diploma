@@ -202,7 +202,7 @@ function newStripCoords(range){
 }
 
 function goToNewURL(event,history,slide1,slide2){
-  let searchParams = new URLSearchParams(window.location.search), url = window.location.pathname,index = 0,paramName,slider = document.querySelector('.price-slider');
+  let searchParams = new URLSearchParams(window.location.search), url = '/catalogue',index = 0,paramName,slider = document.querySelector('.price-slider');
   for(let pair of searchParams.entries()){
     if(pair[0] !== 'minPrice' && pair[0] !== 'maxPrice'){
       url += `${index ? `&${pair[0]}=${pair[1]}`: `?${pair[0]}=${pair[1]}`}`;
@@ -218,7 +218,7 @@ let changeSliderVal = (event,history) => {
   let bigger = event.currentTarget.classList.contains('input-2');
   let element = bigger ? document.querySelector('.price-slider').children[2] : document.querySelector('.price-slider').children[0];
   element.value = event.currentTarget.value;
-  let searchParams = new URLSearchParams(window.location.search), url = window.location.pathname,index = 0;
+  let searchParams = new URLSearchParams(window.location.search), url = '/catalogue',index = 0;
   let paramName = bigger ? 'maxPrice' : 'minPrice';
   for(let pair of searchParams.entries()){
     if(pair[0] !== paramName){
