@@ -1,4 +1,5 @@
 //Видимость блока корзина и профиля в шапке
+let istimeout = false;
 function headerHiddenPanelProfileVisibility() {
     document.querySelector('.hidden-panel__basket').classList.remove('hidden-panel__basket_visible');
     document.querySelector('.hidden-panel__profile').classList.add('hidden-panel__profile_visible');
@@ -160,21 +161,44 @@ let headerTitle = () => {
   return title;
 }
 
+let withDebouncer = debounce(goToNewURL,100);
+
+function debounce(callback, delay) {
+  let timeout;
+  return (e,history,slide1,slide2) => {
+  clearTimeout(timeout);
+  timeout = setTimeout(function() {
+  timeout = null;
+  callback(e,history,slide1,slide2);
+  }, delay);
+  };
+  };
+  
+
 
 function getVals(e,history){
   // Get slider values
+  newStripCoords(e.currentTarget);
   var parent = e.currentTarget.parentNode;
   var slides = parent.getElementsByTagName("input");
   var slide1 = parseFloat( slides[0].value );
   var slide2 = parseFloat( slides[1].value );
   // Neither slider will clip the other, so make sure we determine which is larger
-  if( slide1 > slide2 ){ var tmp = slide2; slide2 = slide1; slide1 = tmp; }
-  
+  if(slide1 > slide2)return;
+
   var displayElement = parent.parentElement.getElementsByClassName("counter")[0];
   displayElement.querySelector('.input-1').value = slide1;
   displayElement.querySelector('.input-2').value = slide2;
+  withDebouncer(e,history,slide1,slide2);
+}
 
-  goToNewURL(e,history,slide1,slide2);
+function newStripCoords(range){
+  const ratio = (range.value - range.min) / (range.max - range.min),strip = document.querySelector('.price-slider-strip')
+  if(range.classList.contains('first-thumb')){
+    strip.style.left = `${range.getBoundingClientRect().width * ratio}px`;
+  }else{
+    strip.style.right = `${range.getBoundingClientRect().width - range.getBoundingClientRect().width * ratio}px`;
+  }
 }
 
 function goToNewURL(event,history,slide1,slide2){
@@ -189,6 +213,24 @@ function goToNewURL(event,history,slide1,slide2){
   history.push(url + str);
 }
 
+
+let changeSliderVal = (event,history) => {
+  let bigger = event.currentTarget.classList.contains('input-2');
+  let element = bigger ? document.querySelector('.price-slider').children[2] : document.querySelector('.price-slider').children[0];
+  element.value = event.currentTarget.value;
+  let searchParams = new URLSearchParams(window.location.search), url = window.location.pathname,index = 0;
+  let paramName = bigger ? 'maxPrice' : 'minPrice';
+  for(let pair of searchParams.entries()){
+    if(pair[0] !== paramName){
+      url += `${index ? `&${pair[0]}=${pair[1]}`: `?${pair[0]}=${pair[1]}`}`;
+      index++;
+    }
+  }
+  let str = index ? `&${paramName}=${event.currentTarget.value}` : `?${paramName}=${event.currentTarget.value}`;
+  history.push(url + str);
+  newStripCoords(document.querySelector(bigger ? '.second-thumb': '.first-thumb'));
+}
+
 export {headerHiddenPanelProfileVisibility}
 export {headerHiddenPanelBasketVisibility}
 export {headerMainSearchVisibility}
@@ -198,3 +240,4 @@ export{switchCaseColor}
 export {manageItemToLocalStorage}
 export {headerTitle}
 export {getVals}
+export {changeSliderVal}

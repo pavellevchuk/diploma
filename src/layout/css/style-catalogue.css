@@ -44,7 +44,7 @@ a:hover {
 
 /*Breadcrumbs*/
 .site-path {
-  width: 70%;
+  width: 75%;
   margin: 0 auto;
   padding-bottom: 18px;
 }
@@ -141,7 +141,7 @@ span.amount {
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;
-  width: 892px;
+  width:85%;
   margin-left: 22px;
   border-top: 1px solid #F4F4F4;
 }
@@ -203,7 +203,7 @@ span.amount {
 /* Карточка товара в каталоге с ховером*/
 a.item-list__item-card {
   display: inline-block;
-  width: 283px;
+  width: 30%;
   height: auto;
   margin-top: 27px;
   margin-bottom: -17px;
@@ -250,7 +250,7 @@ a.item-list__item-card {
 .item-pic {
   position: relative;
   display: block;
-  width: 283px;
+  width: 100%;
   height: 247px;
   margin: auto;
   overflow: hidden;
@@ -348,7 +348,7 @@ a.item-list__item-card {
 
 .product-catalogue .item-desc {
   position: relative;
-  width: 283px;
+  width: 100%;
   outline: none;
 }
 
@@ -413,13 +413,13 @@ span.producer {
 /*Пагинация в каталоге*/
 .product-catalogue__pagination {
   display: block;
-  width: 892px;
+  width: 85%;
   margin: 20px 0 25px 22px;
 }
 
 .page-nav-wrapper {
   display: flex;
-  width: 365px;
+  width: 330px;
   margin: 0 auto;
   align-items: center;
 }
@@ -477,7 +477,7 @@ li.active {
 
 /*Слайдер "Вы смотрели"*/
 .product-catalogue__overlooked-slider {
-  width: 995px;
+  width: 50%;
   height: 180px;
   margin: 45px auto 62px;
 }
@@ -523,7 +523,7 @@ li.active {
 }
 
 .overlooked-slider__item {
-  width: 184px;
+  width: 19%;
   height: 133px;
   border: solid 0.5px rgba(41, 42, 58, 0.25);
   background-repeat: no-repeat;
@@ -638,7 +638,7 @@ li.active {
 
 /*Списки в сайдбаре*/
 .sidebar ul {
-  width: 240px;
+  width: 90%;
   margin: -3px auto;
   display: flex;
   border-radius: 10px;
@@ -711,7 +711,7 @@ li.active {
 .price-slider {
   display: flex;
   flex-direction: column;
-  width: 240px;
+  width: 90%;
   height: 94px;
   margin: 0 auto;
 }
@@ -807,7 +807,7 @@ li.active {
 }
 
 .sidebar__color ul {
-  width: 242px;
+  width: 90%;
   height: 140px;
   flex-direction: column;
   flex-wrap: nowrap;
@@ -982,7 +982,7 @@ span.color-name {
 }
 
 .sidebar__occasion ul {
-  width: 240px;
+  width: 90%;
   height: 143px;
   flex-direction: column;
   flex-wrap: nowrap;
@@ -1007,7 +1007,7 @@ span.color-name {
 }
 
 .sidebar__season ul {
-  width: 240px;
+  width: 90%;
   height: 70px;
   flex-direction: column;
   flex-wrap: nowrap;
@@ -1039,7 +1039,7 @@ form.brand-search {
 input[type="search"] {
   position: relative;
   display: block;
-  width: 238px;
+  width: 90%;
   height: 38px;
   margin: -1px 22px;
   padding-left: 10px;
@@ -1178,6 +1178,18 @@ section.price-slider {
   height: 100px;
   text-align: center;
 }
+
+section.price-slider .price-slider-strip{
+  position: absolute;
+  top: 50px;
+  height: 7px;
+  background: #A1B3BF;
+  z-index: 2;
+  left:0;
+  right:0;
+}
+
+
 section.price-slider input[type="range"] {
   pointer-events: none;
   position: absolute;
@@ -1197,7 +1209,7 @@ section.price-slider input[type="range"] {
 section.price-slider input[type="range"]::-webkit-slider-thumb {
   pointer-events: all;
   position: relative;
-  z-index: 1;
+  z-index: 3;
   outline: 0;
   -webkit-appearance: none;
   width: 25px;

@@ -1,6 +1,6 @@
 import React from 'react'
 import {Link,withRouter} from 'react-router-dom'
-import{createURL,switchCaseColor,getVals} from '../scripts/script.js'
+import{createURL,switchCaseColor,getVals,changeSliderVal} from '../scripts/script.js'
 
 class Sidebar extends React.Component{
   constructor(props){
@@ -47,11 +47,17 @@ class Sidebar extends React.Component{
     if(opener.classList.contains('opener-up')){
       opener.classList.remove('opener-up');
       opener.classList.add('opener-down');
-      event.currentTarget.parentElement.classList.contains('sidebar__price') ? event.currentTarget.parentElement.querySelector('.price-slider').style.display = 'none' : event.currentTarget.parentElement.querySelector('ul').style.display = 'none';
+      if(event.currentTarget.parentElement.classList.contains('sidebar__price')){
+        event.currentTarget.parentElement.querySelector('.price-slider').style.display = 'none';
+        event.currentTarget.parentElement.querySelector('.counter').style.display = 'none';
+      }else event.currentTarget.parentElement.querySelector('ul').style.display = 'none';
     }else{
       opener.classList.remove('opener-down');
       opener.classList.add('opener-up');
-      event.currentTarget.parentElement.classList.contains('sidebar__price') ? event.currentTarget.parentElement.querySelector('.price-slider').style.display = 'flex' : event.currentTarget.parentElement.querySelector('ul').style.display = 'flex';
+      if(event.currentTarget.parentElement.classList.contains('sidebar__price')){
+        event.currentTarget.parentElement.querySelector('.price-slider').style.display = 'flex';
+        event.currentTarget.parentElement.querySelector('.counter').style.display = 'flex';
+      } else event.currentTarget.parentElement.querySelector('ul').style.display = 'flex';
     }
   }
 
@@ -112,6 +118,7 @@ class Sidebar extends React.Component{
               </div>
               <section className="price-slider" ref={element => this.priceSlider = element}>
                 <FirstThumb/>
+                <div className="price-slider-strip"></div>
                 <SecondThumb/>
               </section>
               <div className="counter">
@@ -202,28 +209,12 @@ class Sidebar extends React.Component{
 
 
 
-const FirstInput = withRouter(({history}) => <input type="number" className="input-1" onChange={event => changeSliderVal(event,history)} defaultValue="5000"/>)
+const FirstInput = withRouter(({history}) => <input type="number" className="input-1" onChange={event => changeSliderVal(event,history)} defaultValue="0"/>)
 
-const SecondInput = withRouter(({history}) => <input type="number" className="input-2" onChange={event => changeSliderVal(event,history)} defaultValue="30000"/>)
+const SecondInput = withRouter(({history}) => <input type="number" className="input-2" onChange={event => changeSliderVal(event,history)} defaultValue="50000"/>)
 
-const FirstThumb = withRouter(({history}) => <input defaultValue="5000" min="500" max="50000" step="500" type="range" onChange = {e => getVals(e, history)}/>)
-const SecondThumb = withRouter(({history}) => <input defaultValue="30000" min="500" max="50000" step="500" type="range" onChange = {e => getVals(e, history)}/>)
+const FirstThumb = withRouter(({history}) => <input defaultValue="0" min="500" max="50000" step="500" type="range" className='first-thumb' onChange = {e => getVals(e, history)}/>)
+const SecondThumb = withRouter(({history}) => <input defaultValue="50000" min="500" max="50000" step="500" type="range" className='second-thumb' onChange = {e => getVals(e, history)}/>)
 
-
-let changeSliderVal = (event,history) => {
-  let bigger = event.currentTarget.classList.contains('input-2');
-  let element = bigger ? document.querySelector('.price-slider').children[1] : document.querySelector('.price-slider').children[0];
-  element.value = event.currentTarget.value;
-  let searchParams = new URLSearchParams(window.location.search), url = window.location.pathname,index = 0;
-  let paramName = bigger ? 'maxPrice' : 'minPrice';
-  for(let pair of searchParams.entries()){
-    if(pair[0] !== paramName){
-      url += `${index ? `&${pair[0]}=${pair[1]}`: `?${pair[0]}=${pair[1]}`}`;
-      index++;
-    }
-  }
-  let str = index ? `&${paramName}=${event.currentTarget.value}` : `?${paramName}=${event.currentTarget.value}`;
-  history.push(url + str);
-}
               
 export default Sidebar
