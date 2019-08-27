@@ -91,7 +91,8 @@ class Catalogue extends React.Component{
         let name = headerTitle();
         this.setState({products:data,isLoading:false,headerTitle:name});
       }else throw new Error(data.message);
-    });
+    })
+    .then(()=>this.sorting.value = withSort);
   }
 
   sortBy = event => {
@@ -113,7 +114,7 @@ class Catalogue extends React.Component{
           </div>
           <div className="product-catalogue__sort-by">
             <p className="sort-by">Сортировать</p>
-            <select id="sorting" onChange={this.sortBy} defaultValue={new URLSearchParams(window.location.search).get('sortBy')}>
+            <select id="sorting" onChange={this.sortBy} ref={element => this.sorting = element}>
               <option></option>
               <option value="popularity">по популярности</option>
               <option value="price">по цене</option>
