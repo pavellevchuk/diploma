@@ -45,9 +45,9 @@ class CatalogueWithFetcher extends React.Component{
     return(
   <div>
     <Preloader/>  
-    <Breadcrumps paths={[{path:'/',name:'Главная'},{path:`/catalogue?categoryId=${id}`,name:headerTitle()}]}/>
+    <Breadcrumps paths={[{path:'/',name:'Главная'},{path:`/catalogue${id === null ?  '' : `?categoryId=${id}`}`,name:headerTitle()}]}/>
     <main className="product-catalogue"> {/* added clearfix in style-catalogue.css */}
-    <Sidebar/>
+    <Sidebar maxPrice={this.state.products.data[0].price}/>
       <section className="product-catalogue-content">
         <Catalogue page={this.state.page} changeCrump = {this.changeCrump}/>
       </section>
@@ -92,7 +92,7 @@ class Catalogue extends React.Component{
         this.setState({products:data,isLoading:false,headerTitle:name});
       }else throw new Error(data.message);
     })
-    .then(()=>this.sorting.value = withSort);
+    .then(()=>this.sorting.value = withSort ? withSort : 'price');
   }
 
   sortBy = event => {
@@ -115,9 +115,8 @@ class Catalogue extends React.Component{
           <div className="product-catalogue__sort-by">
             <p className="sort-by">Сортировать</p>
             <select id="sorting" onChange={this.sortBy} ref={element => this.sorting = element}>
-              <option></option>
-              <option value="popularity">по популярности</option>
               <option value="price">по цене</option>
+              <option value="popularity">по популярности</option>
               <option value="size">по размеру</option>
               <option value="brand">по производителю</option>
             </select>

@@ -33,7 +33,9 @@ class Nav extends React.Component{
         cartWrapper.querySelector('.basket-dropped__title').style.display = 'none';
         cartWrapper.querySelector('.basket-dropped__order-button').style.display = 'none';
         cartWrapper.querySelector('.no-products__title').style.display = 'block';
-        this.setState({cartCountVisible:false});
+        this.basketPanel.classList.remove('header-main__hidden-panel_visible');
+        this.basketPanelPic.classList.remove('header-main__pic_basket_menu_is-active');
+        this.setState({cartCountVisible:false,data:[]});
         return;
       }
 
@@ -139,7 +141,7 @@ class Nav extends React.Component{
                 <div className="header-main__pic_border"></div>
                 <div className="header-main__pic header-main__pic_basket" ref = {element => this.basketPic = element}>
                   <div className="header-main__pic_basket_full" style={{display:`${cartCountVisible ? 'block' : 'none'}`}}>{this.state.cartCount}</div>
-                  <div className="header-main__pic_basket_menu"></div>
+                  <div className="header-main__pic_basket_menu" ref = {element => this.basketPanelPic = element}></div>
                 </div>
               </div>
               <form className="header-main__search" action="#" >
@@ -147,7 +149,7 @@ class Nav extends React.Component{
               </form>
             </div>
           </div>
-          <div className="header-main__hidden-panel hidden-panel">
+          <div className="header-main__hidden-panel hidden-panel" ref={element => this.basketPanel = element}>
             <div className="wrapper">
               <div className="hidden-panel__profile"><Link to="/">Личный кабинет</Link><Link to="/favourite"><i className="fa fa-heart-o" aria-hidden="true"></i>Избранное</Link><Link to="/">Выйти</Link></div>
               <div className="hidden-panel__basket basket-dropped" >

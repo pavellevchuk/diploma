@@ -67,9 +67,26 @@ class Sidebar extends React.Component{
   }
 
   createMultipleURL = (name,filter) => {
-    let searchParams = new URLSearchParams(window.location.search);
-    searchParams.has(name) ? searchParams.get(name) === filter ? searchParams.delete(name) : searchParams.set(name,filter) : searchParams.append(name, filter);
-    return '?' + searchParams.toString(); 
+    let searchParams = new URLSearchParams(window.location.search), searchString, paramsToString = searchParams.toString();
+    if(name !== 'size[]' && name !== 'heelSize[]'){
+      searchParams.has(name) ? searchParams.get(name) === `${filter}` ? searchParams.delete(name) : searchParams.set(name,filter) : searchParams.append(name, filter);
+      searchString = '?' + searchParams.toString(); 
+    }else{
+      let sizeIndex = searchParams.toString().indexOf(`size%5B%5D=${filter}`),
+      heelSizeIndex = searchParams.toString().indexOf(`heelSize%5B%5D=${filter}`);
+
+      if((sizeIndex === -1 && name === 'size[]') || (heelSizeIndex === -1 && name === 'heelSize[]')){
+        searchParams.append(name, filter);
+        searchString = '?' + searchParams.toString();
+      }else if (name === 'size[]'){
+        searchString = '?' + (paramsToString.indexOf(`&size%5B%5D=${filter}`) === -1 ? paramsToString.replace(`size%5B%5D=${filter}`,'') : paramsToString.replace(`&size%5B%5D=${filter}`,''));
+      }else{
+        searchString = '?' + (paramsToString.indexOf(`&heelSize%5B%5D=${filter}`) === -1 ? paramsToString.replace(`heelSize%5B%5D=${filter}`,'') : paramsToString.replace(`&heelSize%5B%5D=${filter}`,''));
+      }
+    }
+
+    searchString = searchString[1] === '&' ?  searchString.replace('&','') : searchString;
+    return searchString;
   }
 
 
@@ -124,7 +141,7 @@ class Sidebar extends React.Component{
               <div className="counter">
                   <FirstInput/>
                   <div className="input-separator"></div>
-                  <SecondInput/>
+                  <SecondInput maxPrice = {this.props.maxPrice}/>
                 </div>
             </div>
         </section>
@@ -211,7 +228,7 @@ class Sidebar extends React.Component{
 
 const FirstInput = withRouter(({history}) => <input type="number" className="input-1" onChange={event => changeSliderVal(event,history)} defaultValue="0"/>)
 
-const SecondInput = withRouter(({history}) => <input type="number" className="input-2" onChange={event => changeSliderVal(event,history)} defaultValue="50000"/>)
+const SecondInput = withRouter(({history}) => <input type="number" className="input-2" onChange={event => changeSliderVal(event,history)} defaultValue='60000'/>)
 
 const FirstThumb = withRouter(({history}) => <input defaultValue="0" min="500" max="50000" step="500" type="range" className='first-thumb' onChange = {e => getVals(e, history)}/>)
 const SecondThumb = withRouter(({history}) => <input defaultValue="50000" min="500" max="50000" step="500" type="range" className='second-thumb' onChange = {e => getVals(e, history)}/>)

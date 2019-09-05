@@ -43,7 +43,7 @@ class OrderPage extends React.Component{
     return (
       <div>
         <Preloader/>
-        {this.state.isOrdered ? <OrderDone data={this.state.data}/> : <Order changeData={this.changeData} cartId={this.props.cartId} productsInCart={this.props.productsInCart}/>}
+        {this.state.isOrdered ? <OrderDone data={this.state.data}/> : <Order changeData={this.changeData} cartId={this.props.cartId} productsInCart={this.props.productsInCart} clearCart={this.props.clearCart}/>}
       </div>)
   }
 }
@@ -93,13 +93,23 @@ class Order extends React.Component{
         paid : this.checkboxes.find(cb => cb.checked).parentElement.querySelector('span').innerText,
         paidType: this.checkboxes.find(cb => cb.checked).value
       }
+      this.props.clearCart();
       this.props.changeData(obj);
     }
 
     checkInputs = e => {
       this.inputs = Array.from(document.querySelectorAll('.order-process__delivery-input'))
-      let filledInputs = this.inputs.filter(input => input.value.length > 0);
-      filledInputs.length === this.inputs.length ? this.button.classList.remove('order-process__form-submit_disabled'): this.button.classList.add('order-process__form-submit_disabled')
+      let filledInputs = this.inputs.filter(input => input.value.length > 0),
+      nameIsCorrect = /^[A-Za-z]+$/.test(this.inputs[0].value),
+      phoneIsCorrect = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im.test(this.inputs[1].value),
+      emailIsCorrect = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(this.inputs[2].value),
+      addressIsCorrect = /^[a-zA-Z0-9\s,'-]*$/.test(this.inputs[3].value);
+      
+      if(nameIsCorrect && phoneIsCorrect && emailIsCorrect && addressIsCorrect && filledInputs.length === this.inputs.length){
+        this.button.classList.remove('order-process__form-submit_disabled');
+      }else{
+        this.button.classList.add('order-process__form-submit_disabled');
+      }
     }
 
     createCartItem = (item,index) => {
