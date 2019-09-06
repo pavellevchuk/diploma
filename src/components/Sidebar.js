@@ -108,13 +108,21 @@ class Sidebar extends React.Component{
   }
 
 
+ FirstInput = withRouter(({history}) => <input type="number" className="input-1" onChange={event => changeSliderVal(event,history)} defaultValue="0"/>)
+
+ SecondInput = withRouter(({history}) => <input type="number" className="input-2" onChange={event => changeSliderVal(event,history)} defaultValue='60000'/>)
+
+ FirstThumb = withRouter(({history}) => <input defaultValue="0" min="500" max='60000' step="500" type="range" className='first-thumb' onChange = {e => getVals(e, history)}/>)
+ SecondThumb = withRouter(({history}) => <input defaultValue='60000' min="500" max='60000' step="500" type="range" className='second-thumb' onChange = {e => getVals(e, history)}/>)
+
+
   render(){
 
     if(!this.state.filters){
       return null;
     }
     this.searchParams = new URLSearchParams(window.location.search);
-
+    let FirstThumb = this.FirstThumb, SecondThumb = this.SecondThumb,FirstInput = this.FirstInput, SecondInput = this.SecondInput;    
     return(      
     <section className="sidebar" ref={element => this.sidebar = element}>
         <section className="sidebar__division">
@@ -141,7 +149,7 @@ class Sidebar extends React.Component{
               <div className="counter">
                   <FirstInput/>
                   <div className="input-separator"></div>
-                  <SecondInput maxPrice = {this.props.maxPrice}/>
+                  <SecondInput/>
                 </div>
             </div>
         </section>
@@ -226,12 +234,7 @@ class Sidebar extends React.Component{
 
 
 
-const FirstInput = withRouter(({history}) => <input type="number" className="input-1" onChange={event => changeSliderVal(event,history)} defaultValue="0"/>)
 
-const SecondInput = withRouter(({history}) => <input type="number" className="input-2" onChange={event => changeSliderVal(event,history)} defaultValue='60000'/>)
-
-const FirstThumb = withRouter(({history}) => <input defaultValue="0" min="500" max="50000" step="500" type="range" className='first-thumb' onChange = {e => getVals(e, history)}/>)
-const SecondThumb = withRouter(({history}) => <input defaultValue="50000" min="500" max="50000" step="500" type="range" className='second-thumb' onChange = {e => getVals(e, history)}/>)
 
               
 export default Sidebar
