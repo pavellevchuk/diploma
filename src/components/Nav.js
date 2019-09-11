@@ -19,7 +19,6 @@ class Nav extends React.Component{
     this.profilePic.onclick = headerHiddenPanelProfileVisibility;
     this.basketPic.onclick = headerHiddenPanelBasketVisibility;
     this.searchPic.onclick = headerMainSearchVisibility;
-
     for (let item of this.mainMenuItems.children) {
       item.onclick = this.menuItemEventListeners;
     }
@@ -105,6 +104,29 @@ class Nav extends React.Component{
       setTimeout(this.toggleCartIndex,400);
     }
   }
+
+  handleEnter = event => {
+    if(event.keyCode == 13){
+      event.preventDefault();
+      if(event.keyCode == 13){
+        event.preventDefault();
+          let searchParams = new URLSearchParams(window.location.search);
+          if(searchParams.has('search')){
+            searchParams.set('search',this.state.searchVal);
+          }else{
+            searchParams.append('search',this.state.searchVal);
+          }
+  
+          if(!this.state.searchVal.length) searchParams.delete('search');
+
+          if(window.location.pathname.indexOf('/catalogue') !== -1){
+            window.location.search = searchParams.toString();
+          }else{
+            window.location += 'catalogue?' + searchParams.toString();
+          }
+        }
+    }
+  }
   
     render(){
       const {data,cartCountVisible} = this.state;
@@ -145,7 +167,8 @@ class Nav extends React.Component{
                 </div>
               </div>
               <form className="header-main__search" action="#" >
-                <input placeholder="Поиск" onChange={event => this.setState({searchVal:event.currentTarget.value})}/><Link to={this.state.searchVal.length ? '/catalogue?search=' + this.state.searchVal : '/catalogue'}><i className="fa fa-search" aria-hidden="true" onClick={e => this.searchPic.click()}></i></Link>
+                <input placeholder="Поиск" onChange={event => this.setState({searchVal:event.currentTarget.value})} onKeyDown = {this.handleEnter}/>
+                <Link to={this.state.searchVal.length ? '/catalogue?search=' + this.state.searchVal : '/catalogue'} ref ={element => this.link = element}><i className="fa fa-search" aria-hidden="true" onClick={e => this.searchPic.click()}></i></Link>
               </form>
             </div>
           </div>

@@ -28,6 +28,8 @@ a:hover {
 .product-catalogue {
   width: 95%;
   margin: 0 auto;
+  display: flex;
+  justify-content: center;
 }
 
 .product-catalogue::after{
@@ -39,7 +41,6 @@ a:hover {
 .product-catalogue-content {
   display: inline-block;
   width: 64%;
-  margin-right: 120px;
 }
 
 /*Breadcrumbs*/
@@ -612,7 +613,6 @@ li.active {
 .sidebar {
   width: 19%;
   height: auto;
-  margin-left: 120px;
   vertical-align: top;
   float: left;
   border-radius: 15px;

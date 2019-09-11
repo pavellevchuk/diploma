@@ -1,6 +1,7 @@
 import React from 'react'
 import {Link,withRouter} from 'react-router-dom'
 import{createURL,switchCaseColor,getVals,changeSliderVal} from '../scripts/script.js'
+import { URL } from 'url';
 
 class Sidebar extends React.Component{
   constructor(props){
@@ -40,7 +41,6 @@ class Sidebar extends React.Component{
     }
     if(!hasChosen) event.currentTarget.classList.add('chosen');
   }
-
 
   toggleView = event => {
     let opener = event.currentTarget.parentElement.querySelector('.sidebar__division-title div');
@@ -107,6 +107,20 @@ class Sidebar extends React.Component{
     return nodesArr;
   }
 
+  handleEnter = event => {
+    if(event.keyCode == 13){
+      event.preventDefault();
+        let searchParams = new URLSearchParams(window.location.search);
+        if(searchParams.has('search')){
+          searchParams.set('search',this.state.searchVal);
+        }else{
+          searchParams.append('search',this.state.searchVal);
+        }
+
+        if(!this.state.searchVal.length) searchParams.delete('search');
+        window.location.search = searchParams.toString();
+      }
+    }
 
  FirstInput = withRouter(({history}) => <input type="number" className="input-1" onChange={event => changeSliderVal(event,history)} defaultValue="0"/>)
 
@@ -213,7 +227,7 @@ class Sidebar extends React.Component{
             <div className="sidebar__brand">
               <h3>Бренд</h3>
               <form action="post" className="brand-search">
-                <input type="search" className="brand-search" id="brand-search" placeholder="Поиск" onChange={event => this.setState({searchVal:event.currentTarget.value})}/>
+                <input type="search" className="brand-search" id="brand-search" placeholder="Поиск" onChange={event => this.setState({searchVal:event.currentTarget.value})} onKeyDown={this.handleEnter}/>
                 <Link to={this.state.searchVal.length ? '?search=' + this.state.searchVal : '/catalogue'}><input className="submit"/></Link>
               </form>
             </div>
