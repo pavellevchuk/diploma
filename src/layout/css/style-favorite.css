@@ -2,7 +2,8 @@
   max-width: 1200px;
 }
 .product-catalogue_favorite {
-  width: inherit;
+  width: 90%;
+  flex-direction: column;
 }
 .product-catalogue_favorite .product-catalogue__pagination {
   width: unset;
